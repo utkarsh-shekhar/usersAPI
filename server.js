@@ -4,6 +4,7 @@ const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
 const url = 'mongodb://localhost/usersDB'
 const app = express()
+const port = Number(process.env.PORT || 8081)
 
 mongoClient.connect(url, function(err, db) {
   if(err) return console.log(err)
@@ -11,8 +12,8 @@ mongoClient.connect(url, function(err, db) {
 
   app.use(bodyParser.urlencoded({extended: true}))
 
-  app.listen(8081, function() {
-    console.log('Listening on 8081');
+  app.listen(port, function() {
+    console.log('Listening on', port);
   })
 
   app.get('/', (req, res) => {
