@@ -22,17 +22,27 @@ mongoClient.connect(url, function(err, db) {
   })
 
   app.post('/users/create', (req, res) => {
+    usersCollection.find({'_id' : req.body.related}).toArray((err, results) => {
+      let newPerson = req.body
+      let insert = usersCollection.insert(newPerson, function(err, inserted) {
 
-    let insert = usersCollection.insert(req.body)
-    console.log(req.body)
-    if(insert) {
-      console.log('insert successful')
-      res.status(200).send('insert successful' + insert)
-    }
-    else {
-      console.log('insert unsuccessful')
-      res.status(200).send('insert unsuccessful')
-    }
+        if(req.body.relationship == 'parent') {
+          newPerson.children = [inserted._id]
+          if(results.parents)
+            results.parents.push(inserted._id)
+          else
+            results.parents = [inserted._id]
+
+          usersCollection.update({'_id' : newPerson.related, inserted})
+          usersCollection.update({'_id' : inserted._id, newPerson})
+
+          res.status(200).send('insert successful')
+        }
+      })
+    })
+
+
+    res.status(200).send('insert unsuccessful')
   })
 
   app.get('/users', (req, res) => {
