@@ -25,10 +25,14 @@ mongoClient.connect(url, function(err, db) {
 
     let insert = usersCollection.insert(req.body)
     console.log(req.body)
-    if(insert)
+    if(insert) {
+      console.log('insert successful')
       res.status(200).send('insert successful', insert)
-    else
+    }
+    else {
+      console.log('insert unsuccessful')
       res.status(200).send('insert unsuccessful')
+    }
   })
 
   app.get('/users', (req, res) => {
