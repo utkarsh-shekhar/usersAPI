@@ -34,7 +34,7 @@ mongoClient.connect(url, function(err, db) {
       usersCollection.insert(newPerson)
       res.status(200).send('insert successful')
     } else {
-      usersCollection.find({'_id' : req.body.related}).toArray((err, results) => {
+      usersCollection.find({'_id' : new mongo.ObjectId(req.body.related)}).toArray((err, results) => {
         let insert = usersCollection.insert(newPerson, function(err, inserted) {
 
           if(req.body.relationship == 'parent') {
