@@ -22,8 +22,15 @@ mongoClient.connect(url, function(err, db) {
   })
 
   app.post('/users/create', (req, res) => {
-    let newPerson = req.body
-    if(newPerson.related == '') {
+    let newPerson = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      nickname: req.body.nickname,
+      gender: req.body.gender,
+      children: null,
+      parents: null
+    }
+    if(req.body.related == '') {
       usersCollection.insert(newPerson)
       res.status(200).send('insert successful')
     } else {
