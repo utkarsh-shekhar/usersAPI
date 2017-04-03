@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
-const url = 'mongodb://localhost/usersDB'
+// const url = 'mongodb://localhost/usersDB'
+const url = 'mongodb://projectdba:password@ds149820.mlab.com:49820/project'
 const app = express()
 const port = Number(process.env.PORT || 8081)
 
