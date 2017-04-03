@@ -27,7 +27,7 @@ mongoClient.connect(url, function(err, db) {
     console.log(req.body)
     if(insert) {
       console.log('insert successful')
-      res.status(200).send('insert successful', insert)
+      res.status(200).send('insert successful' + insert)
     }
     else {
       console.log('insert unsuccessful')
